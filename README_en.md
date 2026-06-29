@@ -130,6 +130,16 @@ src/
 
 ---
 
+## Contact
+
+Feel free to reach out — scan the QR code to add me on WeChat:
+
+<p align="center">
+  <img src="docs/screenshots/wechat-qr.jpg" width="200" alt="WeChat QR Code" />
+</p>
+
+---
+
 ## License
 
 MIT
