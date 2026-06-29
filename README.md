@@ -7,6 +7,10 @@
 <p align="center">暗夜毛玻璃 React 工作台模板</p>
 
 <p align="center">
+  <a href="https://glass-ui-react.vercel.app"><img src="https://img.shields.io/badge/🌐_在线预览-glass--ui--react.vercel.app-000?style=for-the-badge&logo=vercel" alt="Live Demo" /></a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" alt="React 19" />
   <img src="https://img.shields.io/badge/Vite-6-646CFF?logo=vite" alt="Vite 6" />
   <img src="https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss" alt="Tailwind 4" />
