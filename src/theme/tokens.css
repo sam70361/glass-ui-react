@@ -36,7 +36,7 @@
   --palette-neutral-rgb: 107, 114, 128;
   --palette-red-rgb: 255, 71, 87;
 
-  /* —— lumina 原始表面（暗夜默认） —— */
+  /* —— 原始表面（暗夜默认） —— */
   --color-bg-primary: #0a0a0f;
   --color-bg-secondary: #12121a;
   --color-bg-tertiary: #0d0d15;
@@ -146,7 +146,7 @@
   --font-display: 'Space Grotesk', 'Manrope', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  /* —— shadcn 语义令牌（映射到 lumina 表面） —— */
+  /* —— shadcn 语义令牌（映射到 glass 表面） —— */
   --background: var(--color-bg-primary);
   --foreground: var(--color-text-primary);
   --card: var(--color-surface-card);
@@ -493,18 +493,18 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* lumina 文本别名（注册为工具类，消除任意值类 text-[var(--...)]） */
+  /* 文本别名（注册为工具类，消除任意值类 text-[var(--...)]） */
   --color-text-primary: var(--color-text-primary);
   --color-text-secondary: var(--color-text-secondary);
   --color-text-tertiary: var(--color-text-tertiary);
   --color-text-muted: var(--color-text-muted);
 
-  /* lumina 画布别名（注册为 bg- 工具类，消除 bg-[var(--color-bg-*)]） */
+  /* 画布别名（注册为 bg- 工具类，消除 bg-[var(--color-bg-*)]） */
   --color-bg-primary: var(--color-bg-primary);
   --color-bg-secondary: var(--color-bg-secondary);
   --color-bg-tertiary: var(--color-bg-tertiary);
 
-  /* lumina 表面与玻璃别名（注册为 bg- 与 border- 工具类） */
+  /* 表面与玻璃别名（注册为 bg- 与 border- 工具类） */
   --color-glass: var(--color-glass-bg);
   --color-glass-bg: var(--color-glass-bg);
   --color-glass-bg-hover: var(--color-glass-bg-hover);
@@ -547,7 +547,7 @@
   --shadow-z16: var(--shadow-z16);
   --shadow-z24: var(--shadow-z24);
 
-  /* 圆角（基于 --radius 派生，含 lumina 的 2xl；clamp 防小圆角主题 0.5rem 算到负值） */
+  /* 圆角（基于 --radius 派生，含 2xl；clamp 防小圆角主题 0.5rem 算到负值） */
   --radius-sm: max(0px, calc(var(--radius) - 8px));
   --radius-md: calc(var(--radius) - 4px);
   --radius-lg: var(--radius);

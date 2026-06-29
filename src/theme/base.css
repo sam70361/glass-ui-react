@@ -93,7 +93,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-secondary) !important;
 }
 
-/* ===== 环境背景：噪点 + 三层径向光晕（移植 lumina base.css） ===== */
+/* ===== 环境背景：噪点 + 三层径向光晕 ===== */
 .bg-ambient {
   position: fixed;
   inset: 0;
@@ -158,21 +158,21 @@ h1, h2, h3, h4, h5, h6 {
   50% { transform: translate(-45%, -10%) scale(1.08); }
 }
 
-@keyframes lumina-fade-up {
+@keyframes glass-fade-up {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
-@keyframes lumina-fade-in {
+@keyframes glass-fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 
 .animate-fade-up {
-  animation: lumina-fade-up var(--transition-slow) cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: glass-fade-up var(--transition-slow) cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .animate-fade-in {
-  animation: lumina-fade-in var(--transition-base) ease both;
+  animation: glass-fade-in var(--transition-base) ease both;
 }
 
 /* 减少动画 */
