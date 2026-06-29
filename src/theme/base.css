@@ -1,0 +1,185 @@
+/* 基础排版与全局表面（plain CSS，引用 tokens.css 中的运行时变量） */
+
+* {
+  border-color: var(--color-glass-border);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+::selection {
+  background: rgba(var(--color-accent-cyan-rgb), 0.3);
+  color: var(--color-text-primary);
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar-thumb);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(var(--color-accent-cyan-rgb), 0.6);
+  outline-offset: 2px;
+}
+
+/* ===== 图表(recharts) 结构色主题化 ===== */
+/* recharts 通过 SVG 呈现属性着色，var() 无法在属性中解析，故用 CSS 选择器覆盖， */
+/* 使坐标轴/网格/标签/游标随明暗主题切换（系列色仍由数据层 palette 决定）。       */
+.recharts-cartesian-axis-tick-value,
+.recharts-polar-angle-axis-tick-value {
+  fill: var(--color-chart-axis);
+}
+.recharts-cartesian-grid line,
+.recharts-polar-grid line,
+.recharts-polar-grid path {
+  stroke: var(--color-chart-grid);
+}
+.recharts-tooltip-cursor {
+  fill: var(--color-chart-cursor);
+}
+.recharts-pie-label-text,
+.recharts-label-list text {
+  fill: var(--color-chart-label);
+}
+/* Tooltip：容器走 contentStyle(令牌)；此处强制文字色随主题，避免 recharts 默认近黑文字在暗色下不可读 */
+.recharts-default-tooltip {
+  background: var(--color-surface-solid) !important;
+  border: 1px solid var(--color-glass-border) !important;
+  border-radius: 10px;
+  box-shadow: var(--shadow-dropdown);
+}
+.recharts-tooltip-label {
+  color: var(--color-text-primary) !important;
+}
+.recharts-tooltip-item,
+.recharts-tooltip-item-name,
+.recharts-tooltip-item-value,
+.recharts-tooltip-item-separator {
+  color: var(--color-text-secondary) !important;
+}
+
+/* ===== 环境背景：噪点 + 三层径向光晕（移植 lumina base.css） ===== */
+.bg-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--color-bg-primary);
+}
+.bg-ambient__glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(60px);
+  opacity: 0.6;
+  will-change: transform;
+}
+.bg-ambient__glow--1 {
+  width: 50vw;
+  height: 50vw;
+  top: -10%;
+  left: -5%;
+  background: var(--gradient-glow-cyan);
+  animation: ambient-float-1 22s ease-in-out infinite;
+}
+.bg-ambient__glow--2 {
+  width: 45vw;
+  height: 45vw;
+  bottom: -15%;
+  right: -10%;
+  background: var(--gradient-glow-magenta);
+  animation: ambient-float-2 26s ease-in-out infinite;
+}
+.bg-ambient__glow--3 {
+  width: 35vw;
+  height: 35vw;
+  top: 40%;
+  left: 50%;
+  background: radial-gradient(ellipse at center, rgba(var(--color-accent-amber-rgb), 0.18), transparent 70%);
+  animation: ambient-float-3 30s ease-in-out infinite;
+}
+.bg-ambient__noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+}
+
+[data-ambient='off'] .bg-ambient__glow,
+[data-ambient='off'] .bg-ambient__noise {
+  display: none;
+}
+
+@keyframes ambient-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(6%, 8%) scale(1.1); }
+}
+@keyframes ambient-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-8%, -6%) scale(1.15); }
+}
+@keyframes ambient-float-3 {
+  0%, 100% { transform: translate(-50%, 0) scale(1); }
+  50% { transform: translate(-45%, -10%) scale(1.08); }
+}
+
+@keyframes lumina-fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes lumina-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+.animate-fade-up {
+  animation: lumina-fade-up var(--transition-slow) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.animate-fade-in {
+  animation: lumina-fade-in var(--transition-base) ease both;
+}
+
+/* 减少动画 */
+[data-reduce-motion='true'] *,
+[data-reduce-motion='true'] *::before,
+[data-reduce-motion='true'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}

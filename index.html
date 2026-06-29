@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="aurora" data-mode="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a0a0f" />
+    <title>Glass UI React</title>
+    <script>
+      // 首屏防闪烁：在 React 挂载前根据持久化的设置应用 data-* 属性
+      (function () {
+        try {
+          var raw = localStorage.getItem('glass-ui-settings');
+          var s = raw ? JSON.parse(raw).state || JSON.parse(raw) : null;
+          var root = document.documentElement;
+          root.setAttribute('data-theme', (s && s.theme) || 'aurora');
+          root.setAttribute('data-mode', (s && s.mode) || 'dark');
+          if (s && s.density === 'compact') root.setAttribute('data-density', 'compact');
+          if (s && s.contrast === 'high') root.setAttribute('data-contrast', 'high');
+          root.setAttribute('data-reduce-motion', String(!!(s && s.reduceMotion)));
+          root.setAttribute('data-ambient', s && s.ambient === false ? 'off' : 'on');
+          if (s && s.fontFamily && s.fontFamily !== 'sans') root.setAttribute('data-font', s.fontFamily);
+          if (s && s.locale) root.setAttribute('lang', s.locale);
+          if (s && s.fontSize && s.fontSize !== 16) root.style.fontSize = s.fontSize + 'px';
+          var g = s && s.contentGutter;
+          var gut = typeof g === 'number' ? g : { compact: 16, standard: 24, relaxed: 40, wide: 64 }[g] || 24;
+          gut = Math.min(240, Math.max(0, gut));
+          root.style.setProperty('--content-gutter', gut + 'px');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

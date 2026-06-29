@@ -1,0 +1,22 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+node_modules/.tmp
+*.tsbuildinfo
+.vite
+storybook-static
+
+# IDE / Editor
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Cursor
+.cursor

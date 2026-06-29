@@ -1,0 +1,569 @@
+@import 'tailwindcss';
+
+/* 字体 */
+@import '@fontsource/space-grotesk/400.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/600.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/manrope/300.css';
+@import '@fontsource/manrope/400.css';
+@import '@fontsource/manrope/500.css';
+@import '@fontsource/manrope/600.css';
+@import '@fontsource/manrope/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+/* ===================================================================== */
+/* 令牌（运行时通过 data-theme[设计语言] / data-mode[明暗] / data-contrast / */
+/* data-density / data-surface[局部] 切换）。:root 兜底 = Aurora dark。        */
+/* ===================================================================== */
+:root {
+  /* —— 第1层 原始调色板（与主题无关；所有品牌/数据/强调/状态色的唯一来源） —— */
+  --palette-cyan: #00d4ff;
+  --palette-magenta: #ff2d92;
+  --palette-amber: #ffb347;
+  --palette-emerald: #00ff94;
+  --palette-violet: #a855f7;
+  --palette-blue: #5b8cff;
+  --palette-neutral: #6b7280;
+  --palette-red: #ff4757;
+  --palette-cyan-rgb: 0, 212, 255;
+  --palette-magenta-rgb: 255, 45, 146;
+  --palette-amber-rgb: 255, 179, 71;
+  --palette-emerald-rgb: 0, 255, 148;
+  --palette-violet-rgb: 168, 85, 247;
+  --palette-blue-rgb: 91, 140, 255;
+  --palette-neutral-rgb: 107, 114, 128;
+  --palette-red-rgb: 255, 71, 87;
+
+  /* —— lumina 原始表面（暗夜默认） —— */
+  --color-bg-primary: #0a0a0f;
+  --color-bg-secondary: #12121a;
+  --color-bg-tertiary: #0d0d15;
+  --color-glass-bg: rgba(255, 255, 255, 0.06);
+  --color-glass-bg-hover: rgba(255, 255, 255, 0.1);
+  --color-glass-bg-active: rgba(255, 255, 255, 0.14);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-border-hover: rgba(255, 255, 255, 0.15);
+  --color-glass-highlight: rgba(255, 255, 255, 0.12);
+  --color-surface-nav: rgba(10, 10, 15, 0.6);
+  --color-surface-projectbar: rgba(18, 18, 26, 0.4);
+  --color-surface-topbar: rgba(10, 10, 15, 0.5);
+  --color-surface-active: rgba(255, 255, 255, 0.08);
+  --color-surface-raised: rgba(255, 255, 255, 0.04);
+  --color-surface-sunken: rgba(0, 0, 0, 0.18);
+  --color-surface-card: rgba(255, 255, 255, 0.07);
+  --color-surface-card-hover: rgba(255, 255, 255, 0.1);
+  --color-surface-solid: #14141d;
+  --color-scrim: rgba(0, 0, 0, 0.6);
+  --color-track: rgba(255, 255, 255, 0.08);
+  --color-scrollbar-thumb: rgba(255, 255, 255, 0.12);
+  --color-scrollbar-thumb-hover: rgba(255, 255, 255, 0.22);
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.72);
+  --color-text-tertiary: rgba(255, 255, 255, 0.5);
+  --color-text-muted: rgba(255, 255, 255, 0.3);
+
+  /* —— 全息强调色（指向调色板；cyan 由 data-theme 主题级覆盖） —— */
+  --color-accent-cyan: var(--palette-cyan);
+  --color-accent-magenta: var(--palette-magenta);
+  --color-accent-amber: var(--palette-amber);
+  --color-accent-cyan-rgb: var(--palette-cyan-rgb);
+  --color-accent-magenta-rgb: var(--palette-magenta-rgb);
+  --color-accent-amber-rgb: var(--palette-amber-rgb);
+
+  /* —— 状态色 RGB（指向调色板，供 rgba(var(--...-rgb), a) 半透明使用） —— */
+  --color-success-rgb: var(--palette-emerald-rgb);
+  --color-warning-rgb: var(--palette-amber-rgb);
+  --color-danger-rgb: var(--palette-red-rgb);
+  --color-info-rgb: var(--palette-cyan-rgb);
+
+  /* —— 功能令牌：全息底前景字 / 控件拨钮 / 图表结构色（随主题在 light 覆盖） —— */
+  --color-holo-foreground: #0a0a0f;
+  --color-control-thumb: #ffffff;
+  --color-chart-axis: rgba(255, 255, 255, 0.25);
+  --color-chart-grid: rgba(255, 255, 255, 0.06);
+  --color-chart-label: rgba(255, 255, 255, 0.6);
+  --color-chart-cursor: rgba(255, 255, 255, 0.04);
+
+  /* —— 层级标度（z-index）：统一管理弹层/导航/悬浮层叠 —— */
+  --z-sticky: 20;
+  --z-nav: 30;
+  --z-fab: 400;
+  --z-dialog: 500;
+  --z-overlay: 600;
+  --z-elevated: 700;
+  --z-tour: 800;
+  --z-tooltip: 1100;
+
+  /* —— 渐变 / 光晕 —— */
+  --gradient-holographic: linear-gradient(
+    135deg,
+    var(--color-accent-cyan),
+    var(--color-accent-magenta),
+    var(--color-accent-amber)
+  );
+  --gradient-glow-cyan: radial-gradient(ellipse at center, rgba(var(--color-accent-cyan-rgb), 0.3), transparent 70%);
+  --gradient-glow-magenta: radial-gradient(
+    ellipse at center,
+    rgba(var(--color-accent-magenta-rgb), 0.25),
+    transparent 70%
+  );
+
+  /* —— 阴影 / 模糊 / 过渡 —— */
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-glass-hover: 0 16px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --shadow-glow-cyan: 0 0 30px rgba(var(--color-accent-cyan-rgb), 0.25), 0 0 60px rgba(var(--color-accent-cyan-rgb), 0.1);
+  --shadow-glow-magenta: 0 0 30px rgba(var(--color-accent-magenta-rgb), 0.25),
+    0 0 60px rgba(var(--color-accent-magenta-rgb), 0.1);
+  --shadow-glow-amber: 0 0 30px rgba(var(--color-accent-amber-rgb), 0.25),
+    0 0 60px rgba(var(--color-accent-amber-rgb), 0.1);
+  /* —— 自定义阴影标度（暗色基于黑） —— */
+  --shadow-z1: 0 1px 2px 0 rgba(0, 0, 0, 0.32);
+  --shadow-z8: 0 8px 16px 0 rgba(0, 0, 0, 0.36);
+  --shadow-z16: 0 16px 32px -4px rgba(0, 0, 0, 0.4);
+  --shadow-z24: 0 24px 48px 0 rgba(0, 0, 0, 0.44);
+  --shadow-card: 0 0 2px 0 rgba(0, 0, 0, 0.24), 0 12px 24px -4px rgba(0, 0, 0, 0.28);
+  --shadow-dropdown: 0 0 2px 0 rgba(0, 0, 0, 0.3), -12px 18px 36px -8px rgba(0, 0, 0, 0.5);
+  --shadow-dialog: 0 0 2px 0 rgba(0, 0, 0, 0.3), -40px 40px 80px -8px rgba(0, 0, 0, 0.56);
+  --blur-sm: blur(8px);
+  --blur-md: blur(16px);
+  --blur-lg: blur(24px);
+  --blur-xl: blur(40px);
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* —— 布局尺寸 —— */
+  --sidebar-width: 72px;
+  --sidebar-width-expanded: 216px;
+  --projectbar-width: 260px;
+  --topbar-height: 64px;
+  --content-gutter: 24px;
+
+  /* —— 字体族（单一来源，@theme inline 与 base.css 均引用） —— */
+  --font-sans: 'Manrope', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Manrope', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* —— shadcn 语义令牌（映射到 lumina 表面） —— */
+  --background: var(--color-bg-primary);
+  --foreground: var(--color-text-primary);
+  --card: var(--color-surface-card);
+  --card-foreground: var(--color-text-primary);
+  --popover: var(--color-surface-solid);
+  --popover-foreground: var(--color-text-primary);
+  --primary: var(--color-accent-cyan);
+  --primary-foreground: var(--color-holo-foreground);
+  --secondary: var(--color-glass-bg);
+  --secondary-foreground: var(--color-text-primary);
+  --muted: var(--color-surface-raised);
+  --muted-foreground: var(--color-text-tertiary);
+  --accent: var(--color-glass-bg-hover);
+  --accent-foreground: var(--color-text-primary);
+  --destructive: var(--palette-red);
+  --destructive-foreground: #ffffff;
+  --border: var(--color-glass-border);
+  --input: var(--color-glass-border);
+  --ring: var(--color-accent-cyan);
+  --radius: 0.875rem;
+}
+
+/* ===================================================================== */
+/* 明暗通用层（data-mode）：阴影/滚动条/遮罩/轨道/图表结构色/控件拨钮          */
+/* 这些按明暗共享，不随主题色相变化（主题只改画布/表面/文本/强调）            */
+/* ===================================================================== */
+:root[data-mode='dark'] {
+  --color-scrim: rgba(0, 0, 0, 0.6);
+  --color-track: rgba(255, 255, 255, 0.08);
+  --color-scrollbar-thumb: rgba(255, 255, 255, 0.12);
+  --color-scrollbar-thumb-hover: rgba(255, 255, 255, 0.22);
+  --color-control-thumb: #ffffff;
+  --color-chart-axis: rgba(255, 255, 255, 0.25);
+  --color-chart-grid: rgba(255, 255, 255, 0.06);
+  --color-chart-label: rgba(255, 255, 255, 0.6);
+  --color-chart-cursor: rgba(255, 255, 255, 0.04);
+  --shadow-z1: 0 1px 2px 0 rgba(0, 0, 0, 0.32);
+  --shadow-z8: 0 8px 16px 0 rgba(0, 0, 0, 0.36);
+  --shadow-z16: 0 16px 32px -4px rgba(0, 0, 0, 0.4);
+  --shadow-z24: 0 24px 48px 0 rgba(0, 0, 0, 0.44);
+  --shadow-card: 0 0 2px 0 rgba(0, 0, 0, 0.24), 0 12px 24px -4px rgba(0, 0, 0, 0.28);
+  --shadow-dropdown: 0 0 2px 0 rgba(0, 0, 0, 0.3), -12px 18px 36px -8px rgba(0, 0, 0, 0.5);
+  --shadow-dialog: 0 0 2px 0 rgba(0, 0, 0, 0.3), -40px 40px 80px -8px rgba(0, 0, 0, 0.56);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-glass-hover: 0 16px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+:root[data-mode='light'] {
+  --color-scrim: rgba(20, 24, 40, 0.38);
+  --color-track: rgba(20, 24, 40, 0.08);
+  --color-scrollbar-thumb: rgba(20, 24, 40, 0.18);
+  --color-scrollbar-thumb-hover: rgba(20, 24, 40, 0.3);
+  --color-control-thumb: #ffffff;
+  --color-chart-axis: rgba(16, 19, 28, 0.35);
+  --color-chart-grid: rgba(16, 19, 28, 0.08);
+  --color-chart-label: rgba(16, 19, 28, 0.6);
+  --color-chart-cursor: rgba(16, 19, 28, 0.04);
+  --shadow-z1: 0 1px 2px 0 rgba(20, 24, 40, 0.1);
+  --shadow-z8: 0 8px 16px 0 rgba(20, 24, 40, 0.12);
+  --shadow-z16: 0 16px 32px -4px rgba(20, 24, 40, 0.14);
+  --shadow-z24: 0 24px 48px 0 rgba(20, 24, 40, 0.16);
+  --shadow-card: 0 0 2px 0 rgba(20, 24, 40, 0.12), 0 12px 24px -4px rgba(20, 24, 40, 0.12);
+  --shadow-dropdown: 0 0 2px 0 rgba(20, 24, 40, 0.16), -12px 18px 36px -8px rgba(20, 24, 40, 0.16);
+  --shadow-dialog: 0 0 2px 0 rgba(20, 24, 40, 0.16), -40px 40px 80px -8px rgba(20, 24, 40, 0.22);
+  --shadow-glass: 0 8px 32px rgba(20, 24, 40, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  --shadow-glass-hover: 0 16px 48px rgba(20, 24, 40, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* ===================================================================== */
+/* 主题设计语言（data-theme）：主色/签名渐变/前景/圆角/模糊 = 主题级           */
+/* 画布/表面/文本/玻璃 = 主题×明暗级；状态色与品牌副色 magenta/amber 跨主题固定 */
+/* ===================================================================== */
+
+/* ——— 极光全息 Aurora（冷·玻璃·全息，默认） ——— */
+:root[data-theme='aurora'] {
+  --color-accent-cyan: var(--palette-cyan);
+  --color-accent-cyan-rgb: var(--palette-cyan-rgb);
+  --gradient-holographic: linear-gradient(135deg, #00d4ff, #ff2d92, #ffb347);
+  --color-holo-foreground: #0a0a0f;
+  --radius: 0.875rem;
+  --blur-sm: blur(8px); --blur-md: blur(16px); --blur-lg: blur(24px); --blur-xl: blur(40px);
+}
+:root[data-theme='aurora'][data-mode='dark'] {
+  --color-bg-primary: #0a0a0f; --color-bg-secondary: #12121a; --color-bg-tertiary: #0d0d15;
+  --color-surface-solid: #14141d;
+  --color-glass-bg: rgba(255, 255, 255, 0.06); --color-glass-bg-hover: rgba(255, 255, 255, 0.1); --color-glass-bg-active: rgba(255, 255, 255, 0.14);
+  --color-glass-border: rgba(255, 255, 255, 0.08); --color-glass-border-hover: rgba(255, 255, 255, 0.15); --color-glass-highlight: rgba(255, 255, 255, 0.12);
+  --color-surface-nav: rgba(10, 10, 15, 0.6); --color-surface-projectbar: rgba(18, 18, 26, 0.4); --color-surface-topbar: rgba(10, 10, 15, 0.5);
+  --color-surface-active: rgba(255, 255, 255, 0.08); --color-surface-raised: rgba(255, 255, 255, 0.04); --color-surface-sunken: rgba(0, 0, 0, 0.18);
+  --color-surface-card: rgba(255, 255, 255, 0.07); --color-surface-card-hover: rgba(255, 255, 255, 0.1);
+  --color-text-primary: #ffffff; --color-text-secondary: rgba(255, 255, 255, 0.72); --color-text-tertiary: rgba(255, 255, 255, 0.5); --color-text-muted: rgba(255, 255, 255, 0.3);
+}
+:root[data-theme='aurora'][data-mode='light'] {
+  --color-bg-primary: #eef1f6; --color-bg-secondary: #ffffff; --color-bg-tertiary: #f5f7fb;
+  --color-surface-solid: #ffffff;
+  --color-glass-bg: rgba(20, 24, 40, 0.04); --color-glass-bg-hover: rgba(20, 24, 40, 0.08); --color-glass-bg-active: rgba(20, 24, 40, 0.12);
+  --color-glass-border: rgba(20, 24, 40, 0.1); --color-glass-border-hover: rgba(20, 24, 40, 0.18); --color-glass-highlight: rgba(20, 24, 40, 0.06);
+  --color-surface-nav: rgba(255, 255, 255, 0.78); --color-surface-projectbar: rgba(248, 250, 253, 0.62); --color-surface-topbar: rgba(255, 255, 255, 0.72);
+  --color-surface-active: rgba(20, 24, 40, 0.08); --color-surface-raised: rgba(255, 255, 255, 0.7); --color-surface-sunken: rgba(20, 24, 40, 0.05);
+  --color-surface-card: rgba(255, 255, 255, 0.72); --color-surface-card-hover: rgba(255, 255, 255, 0.88);
+  --color-text-primary: #10131c; --color-text-secondary: rgba(16, 19, 28, 0.72); --color-text-tertiary: rgba(16, 19, 28, 0.55); --color-text-muted: rgba(16, 19, 28, 0.4);
+}
+
+/* ——— 赛博霓虹 Cyber（霓虹·OLED·强发光） ——— */
+:root[data-theme='cyber'] {
+  --color-accent-cyan: #a855f7;
+  --color-accent-cyan-rgb: 168, 85, 247;
+  --gradient-holographic: linear-gradient(135deg, #a855f7, #ec4899, #38bdf8);
+  --color-holo-foreground: #0a0a0f;
+  --radius: 0.5rem;
+  --blur-sm: blur(8px); --blur-md: blur(16px); --blur-lg: blur(26px); --blur-xl: blur(44px);
+}
+:root[data-theme='cyber'][data-mode='dark'] {
+  --color-bg-primary: #000000; --color-bg-secondary: #0a0a12; --color-bg-tertiary: #050507;
+  --color-surface-solid: #0e0e16;
+  --color-glass-bg: rgba(255, 255, 255, 0.06); --color-glass-bg-hover: rgba(255, 255, 255, 0.1); --color-glass-bg-active: rgba(255, 255, 255, 0.14);
+  --color-glass-border: rgba(180, 120, 255, 0.12); --color-glass-border-hover: rgba(180, 120, 255, 0.2); --color-glass-highlight: rgba(255, 255, 255, 0.12);
+  --color-surface-nav: rgba(0, 0, 0, 0.6); --color-surface-projectbar: rgba(10, 10, 18, 0.5); --color-surface-topbar: rgba(0, 0, 0, 0.55);
+  --color-surface-active: rgba(255, 255, 255, 0.1); --color-surface-raised: rgba(255, 255, 255, 0.04); --color-surface-sunken: rgba(0, 0, 0, 0.3);
+  --color-surface-card: rgba(255, 255, 255, 0.07); --color-surface-card-hover: rgba(255, 255, 255, 0.1);
+  --color-text-primary: #ffffff; --color-text-secondary: rgba(255, 255, 255, 0.72); --color-text-tertiary: rgba(255, 255, 255, 0.5); --color-text-muted: rgba(255, 255, 255, 0.3);
+}
+:root[data-theme='cyber'][data-mode='light'] {
+  --color-bg-primary: #f4f4f7; --color-bg-secondary: #ffffff; --color-bg-tertiary: #fafaff;
+  --color-surface-solid: #ffffff;
+  --color-glass-bg: rgba(30, 20, 50, 0.04); --color-glass-bg-hover: rgba(30, 20, 50, 0.08); --color-glass-bg-active: rgba(30, 20, 50, 0.12);
+  --color-glass-border: rgba(120, 60, 200, 0.12); --color-glass-border-hover: rgba(120, 60, 200, 0.2); --color-glass-highlight: rgba(30, 20, 50, 0.05);
+  --color-surface-nav: rgba(255, 255, 255, 0.8); --color-surface-projectbar: rgba(248, 247, 253, 0.62); --color-surface-topbar: rgba(255, 255, 255, 0.74);
+  --color-surface-active: rgba(30, 20, 50, 0.08); --color-surface-raised: rgba(255, 255, 255, 0.7); --color-surface-sunken: rgba(30, 20, 50, 0.05);
+  --color-surface-card: rgba(255, 255, 255, 0.74); --color-surface-card-hover: rgba(255, 255, 255, 0.9);
+  --color-text-primary: #15121d; --color-text-secondary: rgba(21, 18, 29, 0.72); --color-text-tertiary: rgba(21, 18, 29, 0.55); --color-text-muted: rgba(21, 18, 29, 0.4);
+}
+
+/* ——— 暖阳极简 Sunset（暖·扁平·柔影） ——— */
+:root[data-theme='sunset'] {
+  --color-accent-cyan: #ff8a4c;
+  --color-accent-cyan-rgb: 255, 138, 76;
+  --gradient-holographic: linear-gradient(135deg, #ff8a4c, #ff5d8f, #ffb347);
+  --color-holo-foreground: #2a1206;
+  --radius: 1.1rem;
+  --blur-sm: blur(0); --blur-md: blur(0); --blur-lg: blur(0); --blur-xl: blur(0);
+}
+:root[data-theme='sunset'][data-mode='dark'] {
+  --color-bg-primary: #1a1714; --color-bg-secondary: #211c18; --color-bg-tertiary: #15110e;
+  --color-surface-solid: #241e19;
+  --color-glass-bg: rgba(255, 240, 230, 0.04); --color-glass-bg-hover: rgba(255, 240, 230, 0.08); --color-glass-bg-active: rgba(255, 240, 230, 0.12);
+  --color-glass-border: rgba(255, 235, 220, 0.1); --color-glass-border-hover: rgba(255, 235, 220, 0.18); --color-glass-highlight: transparent;
+  --color-surface-nav: #1a1714; --color-surface-projectbar: #15110e; --color-surface-topbar: #1a1714;
+  --color-surface-active: rgba(255, 240, 230, 0.08); --color-surface-raised: rgba(255, 240, 230, 0.04); --color-surface-sunken: rgba(0, 0, 0, 0.22);
+  --color-surface-card: #221c17; --color-surface-card-hover: #2a231d;
+  --color-text-primary: #fbf4ee; --color-text-secondary: rgba(251, 244, 238, 0.72); --color-text-tertiary: rgba(251, 244, 238, 0.5); --color-text-muted: rgba(251, 244, 238, 0.3);
+  --shadow-glass: var(--shadow-z1); --shadow-glass-hover: var(--shadow-z8);
+}
+:root[data-theme='sunset'][data-mode='light'] {
+  --color-bg-primary: #faf6f0; --color-bg-secondary: #ffffff; --color-bg-tertiary: #f5efe6;
+  --color-surface-solid: #ffffff;
+  --color-glass-bg: rgba(60, 40, 25, 0.04); --color-glass-bg-hover: rgba(60, 40, 25, 0.08); --color-glass-bg-active: rgba(60, 40, 25, 0.12);
+  --color-glass-border: rgba(60, 40, 25, 0.1); --color-glass-border-hover: rgba(60, 40, 25, 0.18); --color-glass-highlight: transparent;
+  --color-surface-nav: #fffdf9; --color-surface-projectbar: #faf6f0; --color-surface-topbar: #fffdf9;
+  --color-surface-active: rgba(60, 40, 25, 0.08); --color-surface-raised: #ffffff; --color-surface-sunken: rgba(60, 40, 25, 0.05);
+  --color-surface-card: #ffffff; --color-surface-card-hover: #faf6f0;
+  --color-text-primary: #2a1d12; --color-text-secondary: rgba(42, 29, 18, 0.72); --color-text-tertiary: rgba(42, 29, 18, 0.55); --color-text-muted: rgba(42, 29, 18, 0.4);
+  --shadow-glass: var(--shadow-z1); --shadow-glass-hover: var(--shadow-z8);
+}
+
+/* ——— 森林自然 Forest（绿·柔和·有机） ——— */
+:root[data-theme='forest'] {
+  --color-accent-cyan: #10b981;
+  --color-accent-cyan-rgb: 16, 185, 129;
+  --gradient-holographic: linear-gradient(135deg, #10b981, #14b8a6, #84cc16);
+  --color-holo-foreground: #04140d;
+  --radius: 0.9rem;
+  --blur-sm: blur(6px); --blur-md: blur(12px); --blur-lg: blur(18px); --blur-xl: blur(30px);
+}
+:root[data-theme='forest'][data-mode='dark'] {
+  --color-bg-primary: #0b1410; --color-bg-secondary: #0f1a15; --color-bg-tertiary: #081109;
+  --color-surface-solid: #122019;
+  --color-glass-bg: rgba(220, 255, 235, 0.06); --color-glass-bg-hover: rgba(220, 255, 235, 0.1); --color-glass-bg-active: rgba(220, 255, 235, 0.14);
+  --color-glass-border: rgba(120, 220, 170, 0.1); --color-glass-border-hover: rgba(120, 220, 170, 0.18); --color-glass-highlight: rgba(200, 255, 225, 0.1);
+  --color-surface-nav: rgba(8, 18, 12, 0.6); --color-surface-projectbar: rgba(12, 24, 18, 0.45); --color-surface-topbar: rgba(8, 18, 12, 0.55);
+  --color-surface-active: rgba(220, 255, 235, 0.08); --color-surface-raised: rgba(220, 255, 235, 0.04); --color-surface-sunken: rgba(0, 0, 0, 0.2);
+  --color-surface-card: rgba(220, 255, 235, 0.07); --color-surface-card-hover: rgba(220, 255, 235, 0.1);
+  --color-text-primary: #eafff4; --color-text-secondary: rgba(234, 255, 244, 0.72); --color-text-tertiary: rgba(234, 255, 244, 0.5); --color-text-muted: rgba(234, 255, 244, 0.3);
+}
+:root[data-theme='forest'][data-mode='light'] {
+  --color-bg-primary: #eef3ee; --color-bg-secondary: #ffffff; --color-bg-tertiary: #f3f7f3;
+  --color-surface-solid: #ffffff;
+  --color-glass-bg: rgba(16, 40, 28, 0.04); --color-glass-bg-hover: rgba(16, 40, 28, 0.08); --color-glass-bg-active: rgba(16, 40, 28, 0.12);
+  --color-glass-border: rgba(16, 40, 28, 0.1); --color-glass-border-hover: rgba(16, 40, 28, 0.18); --color-glass-highlight: rgba(16, 40, 28, 0.06);
+  --color-surface-nav: rgba(255, 255, 255, 0.8); --color-surface-projectbar: rgba(245, 250, 245, 0.62); --color-surface-topbar: rgba(255, 255, 255, 0.74);
+  --color-surface-active: rgba(16, 40, 28, 0.08); --color-surface-raised: rgba(255, 255, 255, 0.7); --color-surface-sunken: rgba(16, 40, 28, 0.05);
+  --color-surface-card: rgba(255, 255, 255, 0.74); --color-surface-card-hover: rgba(255, 255, 255, 0.9);
+  --color-text-primary: #0e1f16; --color-text-secondary: rgba(14, 31, 22, 0.72); --color-text-tertiary: rgba(14, 31, 22, 0.55); --color-text-muted: rgba(14, 31, 22, 0.4);
+}
+
+/* ——— 学术专业 Scholar（靛蓝·结构·描边） ——— */
+:root[data-theme='scholar'] {
+  --color-accent-cyan: #4f46e5;
+  --color-accent-cyan-rgb: 79, 70, 229;
+  --gradient-holographic: linear-gradient(135deg, #4f46e5, #0ea5e9, #8b5cf6);
+  --color-holo-foreground: #ffffff;
+  --radius: 0.5rem;
+  --blur-sm: blur(0); --blur-md: blur(0); --blur-lg: blur(0); --blur-xl: blur(0);
+}
+:root[data-theme='scholar'][data-mode='dark'] {
+  --color-bg-primary: #0f172a; --color-bg-secondary: #1e293b; --color-bg-tertiary: #0b1120;
+  --color-surface-solid: #1e293b;
+  --color-glass-bg: rgba(255, 255, 255, 0.04); --color-glass-bg-hover: rgba(255, 255, 255, 0.08); --color-glass-bg-active: rgba(255, 255, 255, 0.12);
+  --color-glass-border: rgba(255, 255, 255, 0.1); --color-glass-border-hover: rgba(255, 255, 255, 0.18); --color-glass-highlight: transparent;
+  --color-surface-nav: rgba(15, 23, 42, 0.7); --color-surface-projectbar: rgba(20, 30, 52, 0.5); --color-surface-topbar: rgba(15, 23, 42, 0.65);
+  --color-surface-active: rgba(255, 255, 255, 0.08); --color-surface-raised: rgba(255, 255, 255, 0.04); --color-surface-sunken: rgba(0, 0, 0, 0.22);
+  --color-surface-card: #16203a; --color-surface-card-hover: #1c2945;
+  --color-text-primary: #e8eef8; --color-text-secondary: rgba(232, 238, 248, 0.72); --color-text-tertiary: rgba(232, 238, 248, 0.5); --color-text-muted: rgba(232, 238, 248, 0.3);
+  --shadow-glass: var(--shadow-z1); --shadow-glass-hover: var(--shadow-z8);
+}
+:root[data-theme='scholar'][data-mode='light'] {
+  --color-bg-primary: #f1f5f9; --color-bg-secondary: #ffffff; --color-bg-tertiary: #f8fafc;
+  --color-surface-solid: #ffffff;
+  --color-glass-bg: rgba(15, 23, 42, 0.03); --color-glass-bg-hover: rgba(15, 23, 42, 0.07); --color-glass-bg-active: rgba(15, 23, 42, 0.11);
+  --color-glass-border: rgba(15, 23, 42, 0.1); --color-glass-border-hover: rgba(15, 23, 42, 0.18); --color-glass-highlight: transparent;
+  --color-surface-nav: rgba(255, 255, 255, 0.85); --color-surface-projectbar: rgba(241, 245, 249, 0.7); --color-surface-topbar: rgba(255, 255, 255, 0.8);
+  --color-surface-active: rgba(15, 23, 42, 0.07); --color-surface-raised: rgba(255, 255, 255, 0.7); --color-surface-sunken: rgba(15, 23, 42, 0.05);
+  --color-surface-card: #ffffff; --color-surface-card-hover: #f8fafc;
+  --color-text-primary: #0f172a; --color-text-secondary: rgba(15, 23, 42, 0.72); --color-text-tertiary: rgba(15, 23, 42, 0.55); --color-text-muted: rgba(15, 23, 42, 0.4);
+  --shadow-glass: var(--shadow-z1); --shadow-glass-hover: var(--shadow-z8);
+}
+
+/* ===== 高对比度（提升文本/边框/卡片可读性）===== */
+/* 用 [data-mode][data-contrast] 双属性(0,3,0)，与主题×明暗块同特异性且置于其后，确保跨 5 主题均生效 */
+:root[data-mode='dark'][data-contrast='high'] {
+  --color-text-secondary: rgba(255, 255, 255, 0.92);
+  --color-text-tertiary: rgba(255, 255, 255, 0.72);
+  --color-glass-border: rgba(255, 255, 255, 0.24);
+  --color-glass-border-hover: rgba(255, 255, 255, 0.36);
+  --color-surface-card: rgba(255, 255, 255, 0.1);
+  --color-surface-card-hover: rgba(255, 255, 255, 0.14);
+}
+:root[data-mode='light'][data-contrast='high'] {
+  --color-text-secondary: rgba(16, 19, 28, 0.92);
+  --color-text-tertiary: rgba(16, 19, 28, 0.72);
+  --color-glass-border: rgba(20, 24, 40, 0.28);
+  --color-glass-border-hover: rgba(20, 24, 40, 0.4);
+  --color-surface-card: #ffffff;
+}
+
+/* ===== 紧凑密度（缩放 Tailwind spacing 基准 + 顶栏高度） ===== */
+:root[data-density='compact'] {
+  --spacing: 0.21rem;
+  --topbar-height: 56px;
+}
+
+/* ===== 字体方案（data-font）：覆盖 --font-sans / --font-display；缺省=Manrope ===== */
+/* MiSans / 阿里巴巴普惠体为本地字体栈：已安装则生效，否则优雅回退到系统中文字体 */
+[data-font='system'] {
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif;
+  --font-display: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+[data-font='noto'] {
+  --font-sans: 'Noto Sans SC', system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-display: 'Noto Sans SC', system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+[data-font='misans'] {
+  --font-sans: 'MiSans', 'MiSans VF', system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-display: 'MiSans', 'MiSans VF', system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+[data-font='puhui'] {
+  --font-sans: 'Alibaba PuHuiTi 3.0', 'Alibaba PuHuiTi', system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-display: 'Alibaba PuHuiTi 3.0', 'Alibaba PuHuiTi', system-ui, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* ===================================================================== */
+/* 表面风格（data-surface）—— 通过覆盖模糊/表面/边框/阴影/高光令牌实现        */
+/* 真正去玻璃；自定义属性可继承，故同样适用于局部作用域（如某个场景容器）        */
+/* ===================================================================== */
+
+/* 扁平：去模糊、不透明卡面、去高光、柔和小阴影 */
+[data-surface='flat'] {
+  --blur-sm: blur(0);
+  --blur-md: blur(0);
+  --blur-lg: blur(0);
+  --blur-xl: blur(0);
+  --color-glass-highlight: transparent;
+  --shadow-glass: var(--shadow-z1);
+  --shadow-glass-hover: var(--shadow-z8);
+  --color-glass-bg: var(--color-bg-secondary);
+  --color-glass-bg-hover: var(--color-bg-tertiary);
+  --color-glass-bg-active: color-mix(in srgb, var(--color-bg-tertiary) 80%, white);
+  --color-surface-card: var(--color-bg-secondary);
+  --color-surface-card-hover: var(--color-bg-tertiary);
+  --color-surface-nav: var(--color-bg-secondary);
+  --color-surface-topbar: var(--color-bg-secondary);
+  --color-surface-projectbar: var(--color-bg-secondary);
+}
+
+/* 描边：去模糊、透明填充、强化边框、去阴影 */
+[data-surface='outline'] {
+  --blur-sm: blur(0);
+  --blur-md: blur(0);
+  --blur-lg: blur(0);
+  --blur-xl: blur(0);
+  --color-glass-highlight: transparent;
+  --shadow-glass: none;
+  --shadow-glass-hover: none;
+  --shadow-card: none;
+  --color-glass-bg: transparent;
+  --color-surface-card: transparent;
+  --color-surface-card-hover: rgba(255, 255, 255, 0.04);
+  --color-surface-nav: transparent;
+  --color-surface-topbar: transparent;
+  --color-surface-projectbar: transparent;
+  --color-glass-border: rgba(255, 255, 255, 0.18);
+  --color-glass-border-hover: rgba(255, 255, 255, 0.32);
+}
+:root[data-mode='light'] [data-surface='outline'],
+:root[data-mode='light'][data-surface='outline'] {
+  --color-surface-card-hover: rgba(20, 24, 40, 0.04);
+  --color-glass-border: rgba(20, 24, 40, 0.2);
+  --color-glass-border-hover: rgba(20, 24, 40, 0.34);
+}
+
+/* glass 为默认值，不需要覆盖任何令牌 */
+[data-surface='glass'] { }
+
+/* ===================================================================== */
+/* Tailwind v4 主题映射（生成工具类，引用上面的运行时变量）                    */
+/* ===================================================================== */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* lumina 文本别名（注册为工具类，消除任意值类 text-[var(--...)]） */
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-tertiary: var(--color-text-tertiary);
+  --color-text-muted: var(--color-text-muted);
+
+  /* lumina 画布别名（注册为 bg- 工具类，消除 bg-[var(--color-bg-*)]） */
+  --color-bg-primary: var(--color-bg-primary);
+  --color-bg-secondary: var(--color-bg-secondary);
+  --color-bg-tertiary: var(--color-bg-tertiary);
+
+  /* lumina 表面与玻璃别名（注册为 bg- 与 border- 工具类） */
+  --color-glass: var(--color-glass-bg);
+  --color-glass-bg: var(--color-glass-bg);
+  --color-glass-bg-hover: var(--color-glass-bg-hover);
+  --color-glass-bg-active: var(--color-glass-bg-active);
+  --color-glass-border: var(--color-glass-border);
+  --color-glass-border-hover: var(--color-glass-border-hover);
+  --color-glass-highlight: var(--color-glass-highlight);
+  --color-surface-card: var(--color-surface-card);
+  --color-surface-card-hover: var(--color-surface-card-hover);
+  --color-surface-solid: var(--color-surface-solid);
+  --color-surface-raised: var(--color-surface-raised);
+  --color-surface-sunken: var(--color-surface-sunken);
+  --color-surface-active: var(--color-surface-active);
+  --color-surface-nav: var(--color-surface-nav);
+  --color-surface-topbar: var(--color-surface-topbar);
+  --color-surface-projectbar: var(--color-surface-projectbar);
+
+  /* 功能色工具类 */
+  --color-holo-foreground: var(--color-holo-foreground);
+  --color-control-thumb: var(--color-control-thumb);
+
+  /* 全息强调色工具类：cyan 由 data-theme 主题级覆盖，magenta/amber 固定 */
+  --color-cyan: var(--color-accent-cyan);
+  --color-magenta: var(--color-accent-magenta);
+  --color-amber: var(--color-accent-amber);
+
+  /* 字体（引用 :root 单一来源） */
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+
+  /* 阴影标度（注册为 shadow- 工具类，消除 shadow-[var(--shadow-*)]；随明暗运行时变） */
+  --shadow-glass: var(--shadow-glass);
+  --shadow-glass-hover: var(--shadow-glass-hover);
+  --shadow-card: var(--shadow-card);
+  --shadow-dropdown: var(--shadow-dropdown);
+  --shadow-dialog: var(--shadow-dialog);
+  --shadow-z1: var(--shadow-z1);
+  --shadow-z8: var(--shadow-z8);
+  --shadow-z16: var(--shadow-z16);
+  --shadow-z24: var(--shadow-z24);
+
+  /* 圆角（基于 --radius 派生，含 lumina 的 2xl；clamp 防小圆角主题 0.5rem 算到负值） */
+  --radius-sm: max(0px, calc(var(--radius) - 8px));
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 14px);
+}
+
+/* 固定状态色（不随主题切换，既生成 bg-success 等工具类，也可 var() 引用） */
+@theme {
+  --color-success: var(--palette-emerald);
+  --color-warning: var(--palette-amber);
+  --color-danger: var(--palette-red);
+  --color-info: var(--palette-cyan);
+}
+
+/* 全息渐变背景：注册为 Tailwind 工具类，使 data-[state=checked]:/aria-selected: 等变体可用 */
+@utility holographic-bg {
+  background: var(--gradient-holographic);
+}

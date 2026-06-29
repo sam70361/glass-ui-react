@@ -1,0 +1,69 @@
+/* 毛玻璃工具层 */
+
+.glass-card {
+  background: var(--color-surface-card);
+  backdrop-filter: var(--blur-lg) saturate(180%);
+  -webkit-backdrop-filter: var(--blur-lg) saturate(180%);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  transition: all var(--transition-base);
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-glass-highlight), transparent);
+}
+
+.glass-card--interactive:hover {
+  background: var(--color-surface-card-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glass-hover);
+}
+
+.glass-panel {
+  background: var(--color-surface-card);
+  backdrop-filter: var(--blur-xl) saturate(200%);
+  -webkit-backdrop-filter: var(--blur-xl) saturate(200%);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-glass);
+}
+
+/* 顶/侧栏等结构表面 */
+.glass-nav {
+  background: var(--color-surface-nav);
+  backdrop-filter: var(--blur-lg) saturate(180%);
+  -webkit-backdrop-filter: var(--blur-lg) saturate(180%);
+  border-color: var(--color-glass-border);
+}
+.glass-topbar {
+  background: var(--color-surface-topbar);
+  backdrop-filter: var(--blur-lg) saturate(180%);
+  -webkit-backdrop-filter: var(--blur-lg) saturate(180%);
+}
+/* 弹层（菜单/对话框）需要更实的玻璃以保证可读性 */
+.glass-overlay {
+  background: color-mix(in srgb, var(--color-surface-solid) 88%, transparent);
+  backdrop-filter: var(--blur-xl) saturate(180%);
+  -webkit-backdrop-filter: var(--blur-xl) saturate(180%);
+  border: 1px solid var(--color-glass-border);
+  box-shadow: var(--shadow-dropdown);
+}
+
+/* 全息描边/文字（holographic-bg 改为 tokens.css 的 @utility，以支持 data-/aria- 变体） */
+.holographic-text {
+  background: var(--gradient-holographic);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
