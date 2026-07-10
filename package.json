@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "A dark glassmorphism React workspace template with 5 themes, 40+ components, and 30+ business scenarios.",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "keywords": [
     "react",
     "glassmorphism",

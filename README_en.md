@@ -146,4 +146,4 @@ Feel free to reach out — scan the QR code to add me on WeChat:
 
 ## License
 
-MIT
+AGPL-3.0
